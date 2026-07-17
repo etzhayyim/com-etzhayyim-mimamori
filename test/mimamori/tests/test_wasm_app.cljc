@@ -25,7 +25,7 @@
 (def ^:private a "did:web:etzhayyim.com:member:fictional:aleph")
 (def ^:private b "did:web:etzhayyim.com:member:fictional:bet")
 
-(def ^:private actor-dir (-> *file* io/file .getParentFile .getParentFile))
+(def ^:private actor-dir (io/file (System/getProperty "user.dir")))
 
 (def ^:private vow-text
   (str "問: 私は弟の保持者でしょうか (創4:9)。\n"

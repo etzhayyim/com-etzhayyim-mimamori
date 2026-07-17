@@ -1,0 +1,7 @@
+{:cell/name "MimamoriHeartbeatCell"
+ :cell/module mimamori.cell
+ :cell/entry fire
+ :cell/node :benjamin
+ :cell/schedule {:type :cron :expr "23 * * * *"}
+ :cell/healthz-port 13080
+ :cell/actor "mimamori"}

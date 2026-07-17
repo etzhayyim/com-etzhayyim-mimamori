@@ -56,42 +56,33 @@ relay · 解ける=G3 · 見えている=G4).
 ## Layout
 
 ```
-20-actors/mimamori/
+mimamori/
 ├── CLAUDE.md                         # this file
-├── cell.py                           # cell-runner entry (fire = one heartbeat)
+├── cell.edn                          # canonical cell-runner registration
 ├── wasm/                             # componentize-py component (build-ready, rasen pattern)
 │   ├── wit/world.wit                 # exports: heartbeat / coverage / bonds-of / vow
 │   ├── app.py                        # export bodies (dev-runnable); stateless
 │   ├── build.sh                      # operator build → dist/mimamori.wasm + CID + did-service
 │   └── README.md
-├── manifest.jsonld                   # actor manifest (2 cells, 8 gates)
+├── manifest.edn                      # canonical actor manifest
+├── schema.edn                        # repository-local ontology
 ├── data/
 │   ├── seed-mimamori-bonds.json      # SYNTHETIC fictional roster + bonds (zero real persons)
 │   └── mimamori.datoms.kotoba.edn    # GENERATED append-only commit-DAG (git-ignored)
-├── methods/                          # pure-stdlib → kotoba pywasm-runnable
-│   ├── bond.py                       # bond lifecycle + schema validator + EAVT emit
-│   ├── coverage_report.py            # aggregate-only coverage (no DID in output)
-│   ├── match.py                      # §D4 offer-matching cell (reach the unkept directly)
-│   ├── kotoba.py                     # content-addressed commit-DAG writer (shionome pattern)
-│   ├── autorun.py                    # deterministic heartbeat: replay→match→mint→coverage→persist
-│   ├── shakai.py                     # keeper-side social-capital mint (moyai verbatim reuse)
-│   └── _edn.py                       # minimal EDN reader (ake/noroshi/watatsuna parity port)
-├── tests/
-│   ├── test_bond.py                  # 10 gate tests
-│   ├── test_coverage.py              # 3 aggregate-only tests
-│   ├── test_kotoba_autorun.py        # 8 R1 tests (DAG/tamper/determinism/match)
-│   ├── test_shakai.py                # 7 social-capital tests (keeper-only/cap/decay/firewalls)
-│   ├── test_cell.py                  # 3 cell-runner contract tests
-│   └── test_wasm_app.py              # 4 wasm export-body tests
+├── src/mimamori/                     # actor implementation and adapters
+├── test/mimamori/                    # standalone test namespaces and fixtures
 └── out/                              # GENERATED — do not hand-edit
 ```
 
 ## Run
 
 ```bash
-cd 20-actors/mimamori
-python3 methods/bond.py               # → out/mimamori-datoms.kotoba.edn
-python3 methods/coverage_report.py    # → out/coverage-report.md
-python3 methods/autorun.py --cycles 3 # heartbeat → data/mimamori.datoms.kotoba.edn
-for t in tests/test_*.py; do python3 $t; done   # 35 green
+./run_tests.sh
 ```
+
+## Standalone multirepo contract
+
+- `manifest.edn`, `schema.edn`, and `cell.edn` are canonical.
+- `moyai.ledger`, `kotoba.datom`, and the generic social membrane are SHA-pinned shared
+  dependencies. Do not copy their implementations into this actor.
+- Do not restore `20-actors`, `50-infra`, or superproject-relative runtime paths.

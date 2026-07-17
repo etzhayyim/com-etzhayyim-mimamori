@@ -10,7 +10,7 @@
             [mimamori.methods.match :as match]))
 
 (defn- seed []
-  (bond/load-seed-file (io/resource "mimamori/data/seed-mimamori-bonds.json")))
+  (bond/load-seed-file (io/file (System/getProperty "user.dir") "data" "seed-mimamori-bonds.json")))
 
 (defn- tmplog []
   (str (java.nio.file.Files/createTempDirectory
@@ -95,8 +95,8 @@
   ;; byte-for-byte BEFORE the Python prune. Freezing it keeps the cross-language CID guarantee
   ;; after autorun.py is gone — the cljc cycle must reproduce the SAME head CID, and cljc must
   ;; still verify the Python-written chain.
-  (let [actor-dir (-> (io/resource "mimamori/cell.cljc") io/file .getParentFile)
-        py-log (str actor-dir "/tests/golden_py_autorun.kotoba.edn")
+  (let [actor-dir (io/file (System/getProperty "user.dir"))
+        py-log (str actor-dir "/test/mimamori/tests/golden_py_autorun.kotoba.edn")
         s (autorun/run-cycle (seed) (tmplog))]
     (is (:ok (kd/verify-chain py-log)))    ;; Clojure verifies the Python-written log
     (is (= (kd/head-cid py-log) (:cid s))))) ;; byte-identical CID across languages

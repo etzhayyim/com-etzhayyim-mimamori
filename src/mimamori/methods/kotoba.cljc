@@ -27,8 +27,8 @@
 
 #?(:clj
    (def log-default
-     "20-actors/mimamori/data/mimamori.datoms.kotoba.edn (resolved at the host edge)."
-     (-> *file* io/file .getParentFile .getParentFile
+     "data/mimamori.datoms.kotoba.edn (resolved at the host edge)."
+     (-> (io/file (System/getProperty "user.dir"))
          (io/file "data" "mimamori.datoms.kotoba.edn"))))
 
 (defn- add* [entity attr value]
