@@ -18,12 +18,8 @@
             [mimamori.methods.kotoba :as kotoba]
             [mimamori.methods.shakai :as shakai]))
 
-;; ROOT via *file*: …/20-actors/mimamori/tests/test_ontology_parity.cljc → up 3 = 20-actors,
-;; up 4 = repo root → 00-contracts/schemas/mishmeret-ontology.kotoba.edn (Python HERE.parents[1]).
-(def ^:private actor-dir (-> *file* io/file .getParentFile .getParentFile))
-(def ^:private ontology
-  (-> actor-dir .getParentFile .getParentFile
-      (io/file "00-contracts" "schemas" "mishmeret-ontology.kotoba.edn")))
+(def ^:private actor-dir (io/file (System/getProperty "user.dir")))
+(def ^:private ontology (io/file actor-dir "schema.edn"))
 
 (defn- load-ontology []
   ;; Mirror Python: drop comment lines (lstrip starts-with ";") then _parse(_tokens(text)).

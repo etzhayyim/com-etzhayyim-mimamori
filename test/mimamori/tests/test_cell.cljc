@@ -2,6 +2,7 @@
   "mimamori cell-runner entry tests — fire contract + registry consistency.
   Port of tests/test_cell.py."
   (:require [clojure.java.io :as io]
+            [clojure.edn :as edn]
             [clojure.string :as str]
             [clojure.test :refer [deftest is]]
             [mimamori.cell :as cell]))
@@ -28,11 +29,10 @@
     (is (not (str/includes? (str s) "fictional")))))
 
 (deftest registry-entry-consistent
-  (let [actor-dir (-> (io/resource "mimamori/cell.cljc") io/file .getParentFile)
-        repo-root (-> actor-dir .getParentFile .getParentFile)
-        edn (slurp (io/file repo-root "50-infra" "cluster" "murakumo" "cell-runner" "cells.edn"))]
-    (is (= 1 (count (re-seq #"MimamoriHeartbeatCell" edn))))
-    (is (str/includes? edn ":module \"mimamori.cell\" :entry \"fire\"")) ;; contract matches this ns
+  (let [registry (edn/read-string (slurp (io/file "cell.edn")))]
+    (is (= "MimamoriHeartbeatCell" (:cell/name registry)))
+    (is (= 'mimamori.cell (:cell/module registry)))
+    (is (= 'fire (:cell/entry registry)))
     (is (some? (ns-resolve 'mimamori.cell 'fire)))
-    (is (str/includes? edn ":expr \"23 * * * *\""))                      ;; off-minute, collision-free
-    (is (= 1 (count (re-seq #":healthz_port 13080" edn))))))            ;; unique port
+    (is (= "23 * * * *" (get-in registry [:cell/schedule :expr])))
+    (is (= 13080 (:cell/healthz-port registry)))))

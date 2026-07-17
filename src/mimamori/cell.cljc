@@ -1,7 +1,7 @@
 (ns mimamori.cell
   "mimamori cell entry — kotodama-cell-runner contract (ADR-2605192415 §7.1).
 
-  Registered in 50-infra/cluster/murakumo/cell-runner/cells.edn as
+  Registered by the superproject cell registry as
   MimamoriHeartbeatCell (node benjamin, cron 23 * * * *, healthz 13080).
   `fire` runs ONE deterministic heartbeat (ADR-2606112300 / pattern 2606091000):
 
@@ -18,10 +18,9 @@
 
 #?(:clj
    (defn- actor-dir
-     "20-actors/mimamori, resolved from this namespace's classpath location so the
-     cell runs from any cwd (the cell-runner's contract)."
+     "Standalone actor repository root."
      []
-     (-> (io/resource "mimamori/cell.cljc") io/file .getParentFile)))
+     (io/file (System/getProperty "user.dir"))))
 
 #?(:clj
    (def log-default

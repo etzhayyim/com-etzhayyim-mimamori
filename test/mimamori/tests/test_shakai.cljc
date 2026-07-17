@@ -13,7 +13,7 @@
 (def B "did:web:etzhayyim.com:member:fictional:bet")
 
 (defn- seed []
-  (bond/load-seed-file (io/resource "mimamori/data/seed-mimamori-bonds.json")))
+  (bond/load-seed-file (io/file (System/getProperty "user.dir") "data" "seed-mimamori-bonds.json")))
 
 (defn- tmplog []
   (str (java.nio.file.Files/createTempDirectory

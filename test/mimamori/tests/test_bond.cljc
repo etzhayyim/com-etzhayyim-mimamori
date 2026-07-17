@@ -11,7 +11,7 @@
 (def C "did:web:etzhayyim.com:member:fictional:gimel")
 
 (defn- seed []
-  (bond/load-seed-file (io/resource "mimamori/data/seed-mimamori-bonds.json")))
+  (bond/load-seed-file (io/file (System/getProperty "user.dir") "data" "seed-mimamori-bonds.json")))
 
 (defmacro gate-thrown?
   "Asserts a gate violation whose message contains `frag`."
