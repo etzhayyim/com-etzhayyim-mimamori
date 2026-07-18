@@ -31,7 +31,7 @@
      "One heartbeat. Idempotent per log state (cycle derives from log length)."
      ([] (fire nil))
      ([log-path]
-      (let [seed (bond/load-seed-file (io/file (actor-dir) "data" "seed-mimamori-bonds.json"))
+      (let [seed (bond/load-seed-file (io/file (actor-dir) "data" "seed-mimamori-bonds.edn"))
             target (or log-path @log-default)
             summary (autorun/run-cycle seed target)]
         (println (str "MimamoriHeartbeatCell cycle " (:cycle summary) ": "

@@ -38,14 +38,14 @@
 (deftest test-coverage-attrs-match-emitter
   (let [o (load-ontology)
         declared (set (map #(get % ":attr") (get o ":coverage/attrs")))
-        seed (bond/load-seed-file (io/file actor-dir "data" "seed-mimamori-bonds.json"))
+        seed (bond/load-seed-file (io/file actor-dir "data" "seed-mimamori-bonds.edn"))
         emitted (set (map #(nth % 2) (kotoba/coverage-datoms (cov/coverage seed) 1)))]
     (is (= declared emitted))))
 
 (deftest test-social-capital-attrs-match-emitter
   (let [o (load-ontology)
         declared (set (map #(get % ":attr") (get o ":social-capital/attrs")))
-        seed (bond/load-seed-file (io/file actor-dir "data" "seed-mimamori-bonds.json"))
+        seed (bond/load-seed-file (io/file actor-dir "data" "seed-mimamori-bonds.edn"))
         eng (bond/replay seed)
         [led _] (shakai/mint-from-keeping eng [] 1)
         emitted (set (map #(nth % 2) (shakai/social-capital-datoms led 1)))]

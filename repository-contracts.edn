@@ -1,0 +1,5 @@
+{:canonical :edn
+ :required ["identity.edn" "manifest.edn" "schema.edn" "cell.edn"
+            "dependencies.edn" "data/seed-mimamori-bonds.edn"]
+ :forbidden-extensions [".go" ".sh" ".wasm" ".jsonld" ".bpmn"]
+ :forbidden-files ["go.mod" "go.sum"]}

@@ -62,12 +62,12 @@ mimamori/
 ├── wasm/                             # componentize-py component (build-ready, rasen pattern)
 │   ├── wit/world.wit                 # exports: heartbeat / coverage / bonds-of / vow
 │   ├── app.py                        # export bodies (dev-runnable); stateless
-│   ├── build.sh                      # operator build → dist/mimamori.wasm + CID + did-service
+│   ├── operator build process                      # operator build → dist/mimamori.wasm + CID + did-service
 │   └── README.md
 ├── manifest.edn                      # canonical actor manifest
 ├── schema.edn                        # repository-local ontology
 ├── data/
-│   ├── seed-mimamori-bonds.json      # SYNTHETIC fictional roster + bonds (zero real persons)
+│   ├── seed-mimamori-bonds.edn      # SYNTHETIC fictional roster + bonds (zero real persons)
 │   └── mimamori.datoms.kotoba.edn    # GENERATED append-only commit-DAG (git-ignored)
 ├── src/mimamori/                     # actor implementation and adapters
 ├── test/mimamori/                    # standalone test namespaces and fixtures
@@ -77,7 +77,7 @@ mimamori/
 ## Run
 
 ```bash
-./run_tests.sh
+bb test
 ```
 
 ## Standalone multirepo contract

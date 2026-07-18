@@ -10,7 +10,7 @@
             [mimamori.methods.match :as match]))
 
 (defn- seed []
-  (bond/load-seed-file (io/file (System/getProperty "user.dir") "data" "seed-mimamori-bonds.json")))
+  (bond/load-seed-file (io/file (System/getProperty "user.dir") "data" "seed-mimamori-bonds.edn")))
 
 (defn- tmplog []
   (str (java.nio.file.Files/createTempDirectory
@@ -91,7 +91,7 @@
 
 (deftest python-cid-parity
   ;; Golden-file parity (ADR-2606131300): `golden-py-autorun.log` is the REAL Python
-  ;; autorun.py output (content-addressed Datom DAG over seed-mimamori-bonds.json), frozen
+  ;; autorun.py output (content-addressed Datom DAG over seed-mimamori-bonds.edn), frozen
   ;; byte-for-byte BEFORE the Python prune. Freezing it keeps the cross-language CID guarantee
   ;; after autorun.py is gone — the cljc cycle must reproduce the SAME head CID, and cljc must
   ;; still verify the Python-written chain.

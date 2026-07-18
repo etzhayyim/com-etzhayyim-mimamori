@@ -252,7 +252,7 @@
 
 #?(:clj
    (defn load-seed-file
-     "Read + parse + validate a seed JSON file (babashka/JVM edge)."
+     "Read, parse, and validate the canonical EDN seed."
      [path]
-     (let [parse (requiring-resolve 'cheshire.core/parse-string)]
-       (load-seed (parse (slurp (str path)) true)))))
+     (let [parse (requiring-resolve 'clojure.edn/read-string)]
+       (load-seed (parse (slurp (str path)))))))

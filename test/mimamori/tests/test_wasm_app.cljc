@@ -36,7 +36,7 @@
        "私が誰を見守っているか、あなたには常に見えています。\n"))
 
 (defn- seed []
-  (bond/load-seed-file (io/file actor-dir "data" "seed-mimamori-bonds.json")))
+  (bond/load-seed-file (io/file actor-dir "data" "seed-mimamori-bonds.edn")))
 
 ;; ── world export bodies (wasm/app.py shapes) ──────────────────────────────────
 (defn- app-heartbeat

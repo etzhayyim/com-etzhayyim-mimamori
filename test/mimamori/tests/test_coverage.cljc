@@ -8,7 +8,7 @@
             [mimamori.methods.coverage-report :as cov]))
 
 (defn- seed []
-  (bond/load-seed-file (io/file (System/getProperty "user.dir") "data" "seed-mimamori-bonds.json")))
+  (bond/load-seed-file (io/file (System/getProperty "user.dir") "data" "seed-mimamori-bonds.edn")))
 
 (deftest aggregates-on-seed
   (let [c (cov/coverage (seed))]
