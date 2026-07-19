@@ -16,7 +16,8 @@
   The engine is a pure value (plain map); every lifecycle op returns the next
   engine. Deterministic: tx = event cycle (no wall clock). Portable .cljc —
   runnable on JVM/babashka/SCI and the kotoba-clj WASM trajectory."
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            #?(:clj [clojure.edn :as edn])))
 
 ;; ── schema (the whole representable surface) ─────────────────────
 
@@ -227,7 +228,7 @@
 ;; ── seed replay ──────────────────────────────────────────────────
 
 (defn load-seed
-  "Validate a parsed seed map (G7). JSON parsing happens at the host edge."
+  "Validate a parsed seed map (G7). EDN parsing happens at the host edge."
   [seed]
   (when-not (:synthetic seed)
     (throw (gate-violation "G7: R0 seed must declare synthetic:true")))
@@ -254,5 +255,4 @@
    (defn load-seed-file
      "Read, parse, and validate the canonical EDN seed."
      [path]
-     (let [parse (requiring-resolve 'clojure.edn/read-string)]
-       (load-seed (parse (slurp (str path)))))))
+     (load-seed (edn/read-string (slurp (str path))))))
